@@ -16,7 +16,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        drawRectangle()
+        drawStar()
+        
     }
     
     @IBAction func redrawTapped(_ sender: Any) {
@@ -34,7 +35,7 @@ class ViewController: UIViewController {
         case 2:
             drawCheckerBoard()
         case 3:
-            drawRotateSquares()
+            drawRotatedSquares()
         case 4:
             drawLines()
         default:
@@ -94,7 +95,7 @@ class ViewController: UIViewController {
         imageView.image = image
     }
     
-    func drawRotateSquares() {
+    func drawRotatedSquares() {
         let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
         
         let img = renderer.image { ctx in
@@ -144,5 +145,94 @@ class ViewController: UIViewController {
         imageView.image = img
     }
     
+    func drawStar() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let image = renderer.image { ctx in
+            
+            ctx.cgContext.translateBy(x: 128, y: 128)
+
+            let poinsOnStar = 5
+            let startAngel: CGFloat = -CGFloat.pi / 2
+            let innerRadius: Double = 512 / 5
+            let outerRadius:Double = 512 / 2
+            
+            let angleIncrement = CGFloat.pi * 2 / CGFloat(poinsOnStar * 2)
+            
+            for i in 0...poinsOnStar * 2 {
+                let radius = (i % 2) == 0 ? outerRadius : innerRadius
+                let angle = startAngel + CGFloat(i) * angleIncrement
+                
+                let x = 256.0 / 2 + radius * cos(Double(angle))
+                let y = 256.0 / 2 + radius * sin(Double(angle))
+                
+                if i == 0 {
+                    ctx.cgContext.move(to: CGPoint(x: x, y: y))
+                } else {
+                    ctx.cgContext.addLine(to: CGPoint(x: x, y: y))
+                }
+            }
+//            ctx.cgContext.move(to: CGPoint(x: 100, y: 100))
+//            ctx.cgContext.addLine(to: CGPoint(x: 150, y: 250))
+//            ctx.cgContext.addLine(to: CGPoint(x: 0, y: 150))
+//
+//            ctx.cgContext.rotate(by: .pi / 2)
+//            ctx.cgContext.move(to: CGPoint(x: 150, y: 0))
+//            ctx.cgContext.addLine(to: CGPoint(x: 250, y: 150))
+//            ctx.cgContext.addLine(to: CGPoint(x: 100, y: 100))
+//            ctx.cgContext.addLine(to: CGPoint(x: -50, y: 200))
+            
+            
+            ctx.cgContext.setStrokeColor(UIColor.black.cgColor)
+            ctx.cgContext.strokePath()
+        }
+        
+        imageView.image = image
+    }
+
+//    func drawExp() {
+//
+//        // Define the size of the canvas
+//        let canvasSize = CGSize(width: 512, height: 512)
+//
+//        // Create a renderer for the canvas
+//        let renderer = UIGraphicsImageRenderer(size: canvasSize)
+//
+//        // Create the image context
+//        let image = renderer.image { context in
+//
+//            context.cgContext.translateBy(x: 256, y: 256)
+//            context.cgContext.rotate(by: .pi / 2)
+//            // Define the starting point for the path
+//            let startPoint = CGPoint(x: 50, y: 50)
+//
+//            // Create a UIBezierPath
+//            let path = UIBezierPath()
+//
+//            // Move to the starting point
+//            path.move(to: startPoint)
+//
+//            // Add the line segments to form the letters
+//            path.addLine(to: CGPoint(x: 80, y: 10))
+//            path.addLine(to: CGPoint(x: 110, y: 50))
+//            path.addLine(to: CGPoint(x: 140, y: 10))
+//            path.addLine(to: CGPoint(x: 170, y: 50))
+//
+//            // Set the line width and stroke color
+//            path.lineWidth = 3.0
+//            UIColor.black.setStroke()
+//
+//            // Stroke the path
+//            path.stroke()
+//
+//
+//        }
+//
+//        // Display the image
+//        imageView.image = image
+//    }
+    
+    
+
 }
 
