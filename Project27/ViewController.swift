@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        drawStar()
+        drawTWIN()
         
     }
     
@@ -232,6 +232,42 @@ class ViewController: UIViewController {
 //        imageView.image = image
 //    }
     
+    func drawTWIN() {
+        let renderer = UIGraphicsImageRenderer(size: CGSize(width: 512, height: 512))
+        
+        let img = renderer.image { ctx in
+            let contextT = ctx.cgContext
+            contextT.translateBy(x: 0, y: 256)
+            
+            // T letter
+            contextT.move(to: CGPoint(x: 0, y: 0))
+            contextT.addLine(to: CGPoint(x: 50, y: 0))
+            contextT.move(to: CGPoint(x: 25, y: 0))
+            contextT.addLine(to: CGPoint(x: 25, y: 50))
+            
+            // W letter
+            contextT.move(to: CGPoint(x: 75, y: 0))
+            contextT.addLine(to: CGPoint(x: 100, y: 50))
+            contextT.addLine(to: CGPoint(x: 125, y: 10))
+            contextT.addLine(to: CGPoint(x: 150, y: 50))
+            contextT.addLine(to: CGPoint(x: 175, y: 0))
+            
+            // I letter
+            contextT.move(to: CGPoint(x: 200, y: 0))
+            contextT.addLine(to: CGPoint(x: 200, y: 50))
+            
+            // N Letter
+            contextT.move(to: CGPoint(x: 225, y: 50))
+            contextT.addLine(to: CGPoint(x: 225, y: 0))
+            contextT.addLine(to: CGPoint(x: 270, y: 50))
+            contextT.addLine(to: CGPoint(x: 270, y: 0))
+            
+            contextT.setStrokeColor(UIColor.black.cgColor)
+            contextT.strokePath()
+        }
+        
+        imageView.image = img
+    }
     
 
 }
